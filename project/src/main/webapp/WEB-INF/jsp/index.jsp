@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fragments" tagdir="/WEB-INF/tags/fragments" %>
+<%@ taglib prefix="util" uri="/WEB-INF/tld/util.tld" %>
 
 <!doctype html>
 <html lang="fr">
@@ -29,8 +30,8 @@
                             <div class="thumbnail">
                                 <img src="/image/${item.imageId}" alt="${fn:escapeXml(item.title)}">
                                 <div class="caption">
-                                    <h3>${fn:escapeXml(item.title)}</h3>
-                                    <p>${fn:escapeXml(item.intro)}</p>
+                                    <h3>${util:text(item.title)}</h3>
+                                    <p>${util:text(item.intro)}</p>
                                 </div>
                             </div>
                         </a>
