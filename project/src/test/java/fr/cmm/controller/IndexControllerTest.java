@@ -79,4 +79,16 @@ public class IndexControllerTest {
                 .andExpect(view().name("recettes"));
     }
 
+    @Test
+    public void negativeIndex() throws Exception {
+        PageQuery pageQuery = new PageQuery();
+        pageQuery.setTag("");
+
+
+        Mockito.when(recipeService.findByQuery(pageQuery)).thenReturn(new ArrayList<>());
+
+        mockMvc.perform(get("/recettes?pageindex=-42"))
+                .andExpect(status().is(200));
+
+    }
 }
