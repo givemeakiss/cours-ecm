@@ -1,6 +1,7 @@
 package fr.cmm.controller;
 
 import fr.cmm.domain.Recipe;
+import fr.cmm.helper.PageQuery;
 import fr.cmm.service.RecipeService;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,6 +14,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
 import javax.inject.Inject;
+
+import java.util.ArrayList;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
@@ -46,6 +49,12 @@ public class IndexControllerTest {
     }
 
     @Test
+    public void contact() throws Exception {
+        mockMvc.perform(get("/contact"))
+                .andExpect(view().name("contact"));
+    }
+
+    @Test
     public void recette() throws Exception {
         String id = "56375619d4c603aa4eb412af";
 
@@ -58,9 +67,16 @@ public class IndexControllerTest {
     }
 
     @Test
-    public void contact() throws Exception {
-        mockMvc.perform(get("/contact"))
-                .andExpect(view().name("contact"));
+    public void recettes() throws Exception {
+        PageQuery pageQuery = new PageQuery();
+        pageQuery.setTag("saumon");
+
+        Mockito.when(recipeService.findByQuery(pageQuery)).thenReturn(new ArrayList<>());
+
+        mockMvc.perform(get("/recettes?tag=saumon"))
+                .andExpect(status().is(200))
+                .andExpect(model().attributeExists("recipes"))
+                .andExpect(view().name("recettes"));
     }
 
 }
