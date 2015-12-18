@@ -2,6 +2,7 @@ package fr.cmm.controller;
 
 import fr.cmm.domain.Recipe;
 import fr.cmm.helper.PageQuery;
+import fr.cmm.helper.Pagination;
 import fr.cmm.service.RecipeService;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,6 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
+import static org.junit.Assert.*;
 
 import javax.inject.Inject;
 
@@ -75,7 +77,7 @@ public class IndexControllerTest {
 
         mockMvc.perform(get("/recettes?tag=saumon"))
                 .andExpect(status().is(200))
-                .andExpect(model().attributeExists("recipes"))
+                .andExpect(model().attributeExists("searchForm"))
                 .andExpect(view().name("recettes"));
     }
 
@@ -87,8 +89,41 @@ public class IndexControllerTest {
 
         Mockito.when(recipeService.findByQuery(pageQuery)).thenReturn(new ArrayList<>());
 
-        mockMvc.perform(get("/recettes?pageindex=-42"))
+        mockMvc.perform(get("/recettes?pageIndex=-42"))
                 .andExpect(status().is(200));
+
+    }
+
+    @Test
+    public void pageCount() throws Exception {
+        Pagination pagination = new Pagination();
+        pagination.setPageSize(10);
+
+        pagination.setCount(50);
+        int nbPagesMultiple = pagination.getPageCount();
+        assertEquals(nbPagesMultiple, 5);
+
+        pagination.setCount(25);
+        int nbPagesNonMultiple = pagination.getPageCount();
+        assertEquals(nbPagesNonMultiple, 3);
+
+        pagination.setCount(0);
+        int nbPagesZero = pagination.getPageCount();
+        assertEquals(nbPagesZero, 0);
+    }
+
+    @Test
+    public void paginationSize() throws Exception {
+        Pagination pagination = new Pagination();
+        pagination.setPageSize(3);
+        pagination.setCount(14);
+        int nbPages = pagination.getPageCount();
+        int lenPagesList = pagination.getPages().size();
+        assertEquals(nbPages, lenPagesList);
+
+        pagination.setCount(150);
+        lenPagesList = pagination.getPages().size();
+        assertEquals(10, lenPagesList);
 
     }
 }
