@@ -42,10 +42,19 @@ public class Pagination {
 
     public List<Integer> getPages() {
         List pageList = new ArrayList<>();
-        for (int i = 1; i<=Math.min(this.getPageCount(), PAGINATION_SIZE); i++)
-        {
-            pageList.add(i);
+        if (pageIndex < PAGINATION_SIZE/2){
+            for (int i = 1; i<=Math.min(this.getPageCount(), PAGINATION_SIZE); i++)
+            {
+                pageList.add(i);
+            }
         }
+        else if (pageIndex >= PAGINATION_SIZE/2){
+            for (int i = pageIndex-((PAGINATION_SIZE/2)-1); i<=Math.min(this.getPageCount(), pageIndex+PAGINATION_SIZE/2); i++)
+            {
+                pageList.add(i);
+            }
+        }
+
         return pageList;
     }
 

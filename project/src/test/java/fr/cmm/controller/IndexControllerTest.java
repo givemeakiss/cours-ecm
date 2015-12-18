@@ -13,6 +13,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
+
+import static java.util.Arrays.asList;
 import static org.junit.Assert.*;
 
 import javax.inject.Inject;
@@ -124,6 +126,11 @@ public class IndexControllerTest {
         pagination.setCount(150);
         lenPagesList = pagination.getPages().size();
         assertEquals(10, lenPagesList);
+
+        pagination.setPageIndex(6);
+        lenPagesList = pagination.getPages().size();
+        assertEquals(10, lenPagesList);
+        assertEquals(asList(2,3,4,5,6,7,8,9,10,11), pagination.getPages());
 
     }
 }
