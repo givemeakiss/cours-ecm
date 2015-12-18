@@ -48,6 +48,7 @@ public class IndexController {
         model.put("recipes", recipeService.findByQuery(pageQuery));
         model.put("pagination", pagination);
 
+
         return "recettes";
     }
 
@@ -77,7 +78,7 @@ public class IndexController {
 
     @RequestMapping("/contact")
     public String contact() {
-        return "contac";
+        return "contact";
     }
 
     @RequestMapping("/mentions-legales")
