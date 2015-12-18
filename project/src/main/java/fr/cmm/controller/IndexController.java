@@ -3,6 +3,7 @@ package fr.cmm.controller;
 import javax.inject.Inject;
 
 import fr.cmm.controller.form.SearchForm;
+import fr.cmm.controller.ResourceNotFoundException;
 import fr.cmm.helper.PageQuery;
 import fr.cmm.helper.Pagination;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import fr.cmm.service.RecipeService;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+
 
 @Controller
 public class IndexController {
@@ -78,7 +80,11 @@ public class IndexController {
 
     @RequestMapping("/recette/{id}")
     public String recette(@PathVariable("id") String id, ModelMap model) {
-        model.put("recipe", recipeService.findById(id));
+        if (recipeService.findById(id) == null) {
+            throw new ResourceNotFoundException();
+        } else {
+            model.put("recipe", recipeService.findById(id));
+        }
 
         return "recette";
     }

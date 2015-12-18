@@ -133,4 +133,14 @@ public class IndexControllerTest {
         assertEquals(asList(2,3,4,5,6,7,8,9,10,11), pagination.getPages());
 
     }
+
+    @Test
+    public void pageNotFound() throws Exception {
+        String id = "56375619d4c603aa4d3deb412af";
+
+        Mockito.when(recipeService.findById(id)).thenReturn(null);
+
+        mockMvc.perform(get("/recette/" + id))
+                .andExpect(status().is(404));
+    }
 }
