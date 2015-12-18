@@ -103,4 +103,17 @@ public class RecipeServiceTest {
 
         Assert.assertEquals(asList("tag1", "tag2", "tag3"), recipeService.findAllTags());
     }
+
+    @Test
+    public void findByIdWithInvalidId() {
+        Assert.assertEquals(recipeService.findById("bade"), null);
+    }
+
+    @Test
+    public void countByQuery() {
+        PageQuery pageQuery = new PageQuery();
+        pageQuery.setTag("choucroute");
+
+        Assert.assertEquals(2, recipeService.countByQuery(pageQuery));
+    }
 }

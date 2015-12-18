@@ -32,11 +32,10 @@ public class RecipeService {
                 .find(mongoQuery, (Object[]) params)
                 .skip(query.skip())
                 .limit(query.getSize())
-                .as(Recipe.class);
-    }
+                .as(Recipe.class);}
 
     public long countByQuery(PageQuery query) {
-        return recipeCollection.count();
+        return this.finrecipeCollection.count();
     }
 
     public Iterator<Recipe> findRandom(int count) {
@@ -44,6 +43,11 @@ public class RecipeService {
     }
 
     public Recipe findById(String id) {
+        try {
+            new ObjectId(id);
+        } catch(IllegalArgumentException e){
+            return null;
+        }
         return recipeCollection.findOne(new ObjectId(id)).as(Recipe.class);
     }
 

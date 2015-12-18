@@ -100,7 +100,7 @@ public class IndexController {
     }
 
     @RequestMapping("/404")
-    public String quatreCent4() {
+    public String notFound() {
         return "404";
     }
 
