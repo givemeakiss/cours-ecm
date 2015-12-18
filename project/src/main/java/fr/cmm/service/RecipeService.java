@@ -35,7 +35,7 @@ public class RecipeService {
                 .as(Recipe.class);}
 
     public long countByQuery(PageQuery query) {
-        return this.finrecipeCollection.count();
+        return recipeCollection.count();
     }
 
     public Iterator<Recipe> findRandom(int count) {
