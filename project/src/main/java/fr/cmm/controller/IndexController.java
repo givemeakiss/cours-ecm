@@ -80,7 +80,7 @@ public class IndexController {
 
     @RequestMapping("/recette/{id}")
     public String recette(@PathVariable("id") String id, ModelMap model) {
-        if (recipeService.findById(id) == null) {
+            if (recipeService.findById(id) == null) {
             throw new ResourceNotFoundException();
         } else {
             model.put("recipe", recipeService.findById(id));
@@ -97,6 +97,16 @@ public class IndexController {
     @RequestMapping("/mentions-legales")
     public String mentionsLegales() {
         return "mentions-legales";
+    }
+
+    @RequestMapping("/404")
+    public String quatreCent4() {
+        return "404";
+    }
+
+    @RequestMapping("/500")
+    public String cinqCent() {
+        return "500";
     }
 }
 

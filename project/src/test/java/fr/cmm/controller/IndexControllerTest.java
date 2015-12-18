@@ -143,4 +143,6 @@ public class IndexControllerTest {
         mockMvc.perform(get("/recette/" + id))
                 .andExpect(status().is(404));
     }
+
+
 }
